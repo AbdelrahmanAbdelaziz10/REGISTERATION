@@ -1,0 +1,25 @@
+.sr-header .title {
+    color: #063776;
+}
+
+.sr-header a .service-icon {
+    color: #063776;
+    margin-right: .3rem;
+}
+
+.sr-header a p {
+    color: #063776;
+    font-weight: 600;
+}
+.sr-header a:hover p{
+    font-size: 1.1rem;
+    transition: all .5s !important;
+}
+.sr-header a:hover .service-icon{
+    transition: all .5s;
+    transform: rotate(180deg);
+    font-size: 1.7rem;
+}
+.table-data p{
+    margin-top: 1rem !important;
+}
