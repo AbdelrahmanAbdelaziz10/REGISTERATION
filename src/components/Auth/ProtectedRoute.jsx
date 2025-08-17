@@ -1,12 +1,18 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isInitialized } = useAuth();
+  const location = useLocation();
+
+  if (!isInitialized) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    // Store the attempted location for redirect after login
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <Outlet />;

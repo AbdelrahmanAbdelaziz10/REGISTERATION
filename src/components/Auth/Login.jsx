@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faEnvelope, faEye, faEyeSlash, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../Style/login.css";
 import { Container } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
@@ -19,6 +19,8 @@ const Login = () => {
   });
   
   const { login } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,6 +75,11 @@ const Login = () => {
 
       // Use the auth context to handle login
       login(data.token);
+      
+      // Redirect to the intended page or default
+      const from = location.state?.from?.pathname || '/service-request';
+      navigate(from, { replace: true });
+
     } catch (err) {
       console.error("Login error:", err);
       setError("Something went wrong. Please try again later.");
@@ -90,15 +97,12 @@ const Login = () => {
       <div className="login-header">
         <div className="login-links">
           <Link to="/login" className="active">Sign In</Link>
-          {/* <Link to="/signup">Sign Up</Link>
-          <Link to="/password-recovery">Password recovery</Link> */}
         </div>
 
         <div className="brand-title">
           <h1>Sign In</h1>
         </div> 
       </div>
-
 
       <form onSubmit={handleSubmit} className="login-form">
         <div className="input-group">
