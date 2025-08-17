@@ -4,6 +4,7 @@ import { faLock, faEnvelope, faEye, faEyeSlash, faExclamationCircle } from "@for
 import { Link, useNavigate } from "react-router-dom";
 import "../../Style/login.css";
 import { Container } from "react-bootstrap";
+import { useAuth } from "./AuthContext";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
@@ -16,7 +17,8 @@ const Login = () => {
     username: "",
     password: ""
   });
-  const navigate = useNavigate();
+  
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,41 +44,35 @@ const Login = () => {
         }),
       });
 
-      const data = await response.json().catch(() => ({}));
+      const data = await response.json();
 
-      // if (!response.ok) {
-      //   // Handle the specific error format from your API
-      //   const errorMessage = data.message?.trim() || "";
+      if (!response.ok) {
+        const errorMessage = data.message?.trim() || "";
         
-      //   if (errorMessage === "Invalid Username!!") {
-      //     setFieldErrors({
-      //       username: "Invalid username. Please check and try again.",
-      //       password: ""
-      //     });
-      //   } else if (errorMessage === "Incorrect Password !") {
-      //     setFieldErrors({
-      //       username: "",
-      //       password: "Incorrect password. Please try again."
-      //     });
-      //   } else {
-      //     // Handle other error messages from details array if present
-      //     const detailMessage = data.details?.[0]?.trim() || "";
-      //     setError(detailMessage || "Authentication failed. Please try again.");
-      //   }
-      //   return;
-      // }
+        if (errorMessage === "Invalid Username!!") {
+          setFieldErrors({
+            username: "Invalid username. Please check and try again.",
+            password: ""
+          });
+        } else if (errorMessage === "Incorrect Password !") {
+          setFieldErrors({
+            username: "",
+            password: "Incorrect password. Please try again."
+          });
+        } else {
+          const detailMessage = data.details?.[0]?.trim() || "";
+          setError(detailMessage || "Authentication failed. Please try again.");
+        }
+        return;
+      }
 
-      // if (!data.status) {
-      //   // Handle case where status is false but response was ok
-      //   const errorMessage = data.message?.trim() || data.details?.[0]?.trim() || "";
-      //   setError(errorMessage || "Authentication failed");
-      //   return;
-      // }
+      if (!data.token) {
+        setError("Authentication failed. No token received.");
+        return;
+      }
 
-      // Store user data and navigate on success
-      localStorage.setItem("Token", JSON.stringify(data.token));
-      // console.log(data.token)
-      navigate("/service-request");
+      // Use the auth context to handle login
+      login(data.token);
     } catch (err) {
       console.error("Login error:", err);
       setError("Something went wrong. Please try again later.");
@@ -94,8 +90,8 @@ const Login = () => {
       <div className="login-header">
         <div className="login-links">
           <Link to="/login" className="active">Sign In</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/password-recovery">Password recovery</Link>
+          {/* <Link to="/signup">Sign Up</Link>
+          <Link to="/password-recovery">Password recovery</Link> */}
         </div>
 
         <div className="brand-title">

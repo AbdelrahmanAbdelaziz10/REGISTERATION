@@ -4,6 +4,8 @@ import LoginPage from './Pages/LoginPage';
 import SingUpPage from './Pages/SingUpPage';
 import PasswordRecoveryPage from './Pages/PasswordRecoveryPage';
 import ServiceRequest from './Pages/ServiceRequest';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import DashBoard from './Pages/DashBoard';
 
 const router = createBrowserRouter([
   {
@@ -15,16 +17,30 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: '/password-recovery',
-        element: <PasswordRecoveryPage />,
+        path: '/login',
+        element: <LoginPage />,
       },
+      // {
+      //   path: '/password-recovery',
+      //   element: <PasswordRecoveryPage />,
+      // },
+      // {
+      //   path: '/signup',
+      //   element: <SingUpPage />,
+      // },
       {
-        path: '/signup',
-        element: <SingUpPage />,
-      },
-      {
-        path: '/service-request',  // Make sure this matches your navigation path
-        element: <ServiceRequest />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: '/service-request',
+            element: <ServiceRequest />,
+          },
+          {
+            path: '/dashboard',
+            element: <DashBoard />,
+          },
+          // Add other protected routes here
+        ],
       },
     ],
   },
