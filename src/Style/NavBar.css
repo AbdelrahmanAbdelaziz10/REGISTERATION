@@ -1,0 +1,47 @@
+/* Navbar container */
+.navbar {
+  width: 100%;
+  background-color: #1d3649 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+}
+
+/* Toolbar content */
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  min-height: 64px;
+}
+
+/* Logo styling */
+.navbar-logo {
+  height: 40px;
+  margin-left: 16px;
+  object-fit: contain;
+}
+
+/* Action buttons */
+.navbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Menu items */
+.navbar-menu-item {
+  color: #000 !important;
+}
+.logo-text{
+  font-size: large;
+  text-align: center;
+  margin-top: .8rem;
+  font-weight: 500;
+}
+.MuiBox-root{
+  gap: 0 !important;
+}

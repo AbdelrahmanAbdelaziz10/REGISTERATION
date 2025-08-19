@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       
       // If we're on the login page, redirect to the intended page or home
       if (location.pathname === '/login') {
-        navigate('/service-request', { replace: true });
+        navigate('/dashboard', { replace: true });
       }
     } else {
       // Only redirect to login if not already there
@@ -31,11 +31,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (newToken) => {
-    localStorage.setItem('authToken', newToken);
-    setToken(newToken);
-    setIsAuthenticated(true);
-    navigate('/service-request', { replace: true });
-  };
+  localStorage.setItem('authToken', newToken);
+  setToken(newToken);
+  setIsAuthenticated(true);
+  navigate('/dashboard', { replace: true }); // Always go to dashboard after login
+};
 
   const logout = () => {
     localStorage.removeItem('authToken');

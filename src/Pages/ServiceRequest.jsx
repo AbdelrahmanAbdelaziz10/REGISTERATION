@@ -16,7 +16,7 @@ const ServiceRequest = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://192.168.0.180:9090/api/sr/all", {
+        const response = await fetch("http://192.168.0.180:9090/api/sr/all", {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

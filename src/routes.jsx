@@ -1,11 +1,11 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App';
 import LoginPage from './Pages/LoginPage';
 import SingUpPage from './Pages/SingUpPage';
 import PasswordRecoveryPage from './Pages/PasswordRecoveryPage';
 import ServiceRequest from './Pages/ServiceRequest';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
-import DashBoard from './Pages/DashBoard';
+import { DashBoard } from './Pages/DashBoard';
 
 const router = createBrowserRouter([
   {
@@ -14,30 +14,22 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LoginPage />,
+        element: <Navigate to="/dashboard" replace />, // Redirect to dashboard if logged in
       },
       {
         path: '/login',
         element: <LoginPage />,
       },
-      // {
-      //   path: '/password-recovery',
-      //   element: <PasswordRecoveryPage />,
-      // },
-      // {
-      //   path: '/signup',
-      //   element: <SingUpPage />,
-      // },
       {
         element: <ProtectedRoute />,
         children: [
           {
-            path: '/service-request',
-            element: <ServiceRequest />,
-          },
-          {
             path: '/dashboard',
             element: <DashBoard />,
+          },
+          {
+            path: '/service-request',
+            element: <ServiceRequest />,
           },
           // Add other protected routes here
         ],

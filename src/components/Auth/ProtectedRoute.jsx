@@ -7,12 +7,16 @@ const ProtectedRoute = () => {
   const location = useLocation();
 
   if (!isInitialized) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
-    // Store the attempted location for redirect after login
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // If trying to access root while authenticated, redirect to dashboard
+  if (location.pathname === '/') {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

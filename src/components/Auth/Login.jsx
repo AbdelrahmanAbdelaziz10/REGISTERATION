@@ -35,7 +35,7 @@ const Login = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("https://192.168.0.180:9090/api/auth/login", {
+      const response = await fetch("http://192.168.0.180:9090/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,10 +74,11 @@ const Login = () => {
       }
 
       // Use the auth context to handle login
+      // login(data.token);
       login(data.token);
       
       // Redirect to the intended page or default
-      const from = location.state?.from?.pathname || '/service-request';
+      const from = location.state?.from?.pathname || '/dashboard';
       navigate(from, { replace: true });
 
     } catch (err) {
