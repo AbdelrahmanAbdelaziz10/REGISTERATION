@@ -1,12 +1,18 @@
-import { CreateWorkOrder } from "../components/Common/CreateWorkOrder";
 import Navbar from "../components/Common/Navbar";
 import { useState } from "react";
 import Sidebar from "../components/Common/Sidebar";
-import { Col, Container, Row } from "react-bootstrap";
+import { CardHeader, Col, Container, Row } from "react-bootstrap";
 import "../Style/Dashboard.css";
-import { Box } from "@mui/material";
+import { Box, CardContent, Typography } from "@mui/material";
 import Card from "../components/Common/Card";
 import DashboardCard from "../components/Common/Card";
+import WorkOrderImage from "../assets/work order.png";
+import ServiceRequestImage from "../assets/pending request.jpg";
+import CloseWorkOrderImage from "../assets/close workorder.png";
+import CreateWorkOrder from "./../components/Common/CreateWorkOrder";
+import ContactsCard from "../components/Common/ContactsCard";
+import WorkOrderBarChart from './../components/Common/Chart/WorkOrderBarChart';
+
 export function DashBoard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? 220 : 65;
@@ -40,16 +46,40 @@ export function DashBoard() {
             </Row>
             <Row className="stats-section justify-content-center">
               <Col xs={12} md={3} className="px-2">
-                <DashboardCard title={"Open Work Order"} value={"21"} />
+                <DashboardCard
+                  title="Service Request"
+                  value="550"
+                  change="20%"
+                  footerText="20 Service Request Today"
+                  positiveChange="none"
+                />
               </Col>
               <Col xs={12} md={3} className="px-2">
-                <DashboardCard title={"Pending Requests"} value={"5"} />
+                <DashboardCard
+                  title="All Work Order"
+                  value="1050"
+                  change="30%"
+                  footerText="600 Total Work Order Today"
+                  positiveChange="none"
+                />
               </Col>
               <Col xs={12} md={3} className="px-2">
-                <DashboardCard title={"Completed Today"} value={"12"} />
+                <DashboardCard
+                  title="Pending Work Order "
+                  value="150"
+                  change="10%"
+                  footerText="20 Pending Work Order Today"
+                  positiveChange={false}
+                />{" "}
               </Col>
               <Col xs={12} md={3} className="px-2">
-                <DashboardCard title={"Overdue Tasks"} value={"3"} />
+                <DashboardCard
+                  title="Close Work Order"
+                  value="900"
+                  change="30%"
+                  footerText="300 Closed Work Order Today"
+                  positiveChange={true}
+                />{" "}
               </Col>
               {/* <StatsCard
                 title="12 Open Work Orders"
@@ -67,35 +97,28 @@ export function DashBoard() {
                 value="5"
               /> */}
             </Row>
-            <Row className="">
+            <Box sx={{ my: 5 }}>
               <CreateWorkOrder />
-            </Row>
+            </Box>
+<Row className="dashboard-row">
+  {/* Work Order Chart Column */}
+  <Col xs={12} md={7} className="dashboard-column">
+    <div className='chart-main-card'>
+        <Typography variant="h6" className="card-title">
+          Work Order Status Overview
+        </Typography>
+          <WorkOrderBarChart />
+    </div>
 
-            <div className="recent-requests">
-              <h3>Recent Requests</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Request</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Request 1</td>
-                    <td>MM/DD/YYYY</td>
-                  </tr>
-                  <tr>
-                    <td>Request 2</td>
-                    <td>MM/DD/YYYY</td>
-                  </tr>
-                  <tr>
-                    <td>Request 3</td>
-                    <td>MM/DD/YYYY</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
+
+  </Col>
+
+  {/* Contacts Card Column */}
+  <Col xs={12} md={5} className="dashboard-column">
+    <ContactsCard />
+  </Col>
+</Row>
           </main>
         </Box>
       </Container>

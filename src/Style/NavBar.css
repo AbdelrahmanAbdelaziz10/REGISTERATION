@@ -1,7 +1,7 @@
 /* Navbar container */
 .navbar {
   width: 100%;
-  background-color: #1d3649 !important;
+  background-color: #1976d2 !important;
   color: #fff !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: fixed;
@@ -44,4 +44,22 @@
 }
 .MuiBox-root{
   gap: 0 !important;
+}
+.avatar-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.avatar-image{
+  width:45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar-div p{
+  font-weight: bold;
+  color: #fff;
+  font-size: .8rem;
+  margin: .5rem;
 }

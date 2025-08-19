@@ -60,10 +60,10 @@ const Sidebar = ({ isOpen, width }) => {
         '& .MuiDrawer-paper': {
           width: width,
           height: 'calc(100vh - 64px)', // Subtract navbar height
-          top: '4.4rem', // Start below navbar
+          top: '4.6rem', // Start below navbar
           left: 0,
           boxSizing: 'border-box',
-          backgroundColor: '#1d3649',
+          backgroundColor: '#1565c0',
           color: 'white',
           transition: 'width 0.3s ease',
           borderRight: 'none', // Remove default border

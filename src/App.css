@@ -165,7 +165,7 @@ img{
 /* Stats Section */
 .stats-section {
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .stats-card {

@@ -1,4 +1,4 @@
-.card{
+/* .card{
     width: 100%;
     padding: 1rem;
     background-color: #ffffef;
@@ -7,4 +7,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+} */
+.image-card{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Notes-Side{
+    background-color: #2980b9;
+    padding: 1rem;
+}
+.Notes-Side p{
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: .8rem;
+    color: #fff;
 }

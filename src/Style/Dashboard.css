@@ -1,3 +1,22 @@
 .main-layout{
     background-color: #fdfcfe !important;
 }
+.Create-dev{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 2px 5px #00000038;
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+}
+/* Dashboard Row Styles */
+.card-title{
+  margin-bottom: 1rem;
+}
+.chart-main-card {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
