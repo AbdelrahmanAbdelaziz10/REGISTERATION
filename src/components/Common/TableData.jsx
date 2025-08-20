@@ -20,9 +20,13 @@ const COLUMNS = [
   { id: "commodity", label: "Commodity", minWidth: 100, align: "center" },
   { id: "reportedby", label: "Reported By", minWidth: 50, align: "center" },
   { id: "reportdate", label: "Reported Date", minWidth: 50, align: "center" },
-  { id: "commoditygroup", label: "Commodity Group", minWidth: 100, align: "center" },
+  {
+    id: "commoditygroup",
+    label: "Commodity Group",
+    minWidth: 100,
+    align: "center",
+  },
   { id: "reportedpriority", label: "Priority", minWidth: 100, align: "center" },
-  
 ];
 
 // Styled components
@@ -32,17 +36,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
   "&:first-of-type": {
-    borderTopLeftRadius: theme.shape.borderRadius
+    borderTopLeftRadius: theme.shape.borderRadius,
   },
   "&:last-of-type": {
-    borderTopRightRadius: theme.shape.borderRadius
-  }
+    borderTopRightRadius: theme.shape.borderRadius,
+  },
 }));
 
 const StyledTableRow = styled(TableRow)({
   "&:last-child td, &:last-child th": {
-    border: 0
-  }
+    border: 0,
+  },
 });
 
 const TableData = ({ srData = [], loading = false, error = null }) => {
@@ -54,7 +58,8 @@ const TableData = ({ srData = [], loading = false, error = null }) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    const newRowsPerPage = event.target.value === "All" ? srData.length : +event.target.value;
+    const newRowsPerPage =
+      event.target.value === "All" ? srData.length : +event.target.value;
     setRowsPerPage(newRowsPerPage);
     setPage(0); // Reset to first page when changing rows per page
   };
@@ -78,12 +83,14 @@ const TableData = ({ srData = [], loading = false, error = null }) => {
   // Error state
   if (error) {
     return (
-      <Box sx={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        p: 4, 
-        color: "error.main" 
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          p: 4,
+          color: "error.main",
+        }}
+      >
         Error loading data: {error.message || error}
       </Box>
     );
@@ -92,25 +99,29 @@ const TableData = ({ srData = [], loading = false, error = null }) => {
   // Empty state
   if (!srData.length) {
     return (
-      <Box sx={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        p: 4,
-        color: "text.secondary"
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          p: 4,
+          color: "text.secondary",
+        }}
+      >
         No service requests found
       </Box>
     );
   }
 
   return (
-    <Paper sx={{ 
-      width: "100%", 
-      overflow: "hidden",
-      boxShadow: 3,
-      borderRadius: 2
-    }}>
-      <TableContainer sx={{ maxHeight: "90vh" }}>
+    <Paper
+      sx={{
+        width: "100%",
+        overflow: "hidden",
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
+    >
+      <TableContainer sx={{ maxHeight: "auto" }}>
         <Table stickyHeader aria-label="service requests table">
           <TableHead>
             <StyledTableRow>
@@ -128,34 +139,37 @@ const TableData = ({ srData = [], loading = false, error = null }) => {
           <TableBody>
             {currentRows.map((row) => {
               // Generate a stable key for each row
-              const rowKey = row.ticketid || row.id || `row-${Math.random().toString(36).substr(2, 9)}`;
-              
+              const rowKey =
+                row.ticketid ||
+                row.id ||
+                `row-${Math.random().toString(36).substr(2, 9)}`;
+
               return (
-                <TableRow 
-                  hover 
-                  role="checkbox" 
+                <TableRow
+                  hover
+                  role="checkbox"
                   tabIndex={-1}
                   key={rowKey}
-                  sx={{ 
+                  sx={{
                     "&:nth-of-type(odd)": {
-                      backgroundColor: "action.hover"
+                      backgroundColor: "action.hover",
                     },
                     "&:last-child td": {
-                      borderBottom: 0
-                    }
+                      borderBottom: 0,
+                    },
                   }}
                 >
                   {COLUMNS.map((column) => {
                     const cellKey = `${rowKey}-${column.id}`;
                     const value = row[column.id];
-                    
+
                     return (
-                      <TableCell 
+                      <TableCell
                         key={cellKey}
                         align={column.align}
                         sx={{
                           fontSize: "0.875rem",
-                          padding: "12px 16px"
+                          padding: "12px 16px",
                         }}
                       >
                         {value || "-"}
@@ -169,18 +183,21 @@ const TableData = ({ srData = [], loading = false, error = null }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 20, { label: "All", value: "All" }]}
         component="div"
         count={srData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[]}
+        onRowsPerPageChange={() => {}} // no-op since hidden
+        // rowsPerPageOptions={[10, 20, { label: "All", value: "All" }]}
+        // onRowsPerPageChange={handleChangeRowsPerPage}
         sx={{
           borderTop: "1px solid",
-          borderColor: "divider"
+          borderColor: "divider",
         }}
       />
+
     </Paper>
   );
 };

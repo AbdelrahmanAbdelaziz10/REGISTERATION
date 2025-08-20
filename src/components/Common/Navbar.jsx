@@ -16,7 +16,7 @@ import { Container } from "react-bootstrap";
 import profile from "../../assets/profile.png";
 import {useSidebar} from '../Context/SidebarContext'
 
-export default function Navbar({ onMenuClick }) {
+export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();

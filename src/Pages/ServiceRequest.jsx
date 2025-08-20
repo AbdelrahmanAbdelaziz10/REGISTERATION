@@ -82,13 +82,13 @@ const ServiceRequest = () => {
                 </Link>{" "}
               </Col>
             </Row>
-            <Row className="stats-section justify-content-center mb-5">
+            <Row className="stats-section justify-content-center mb-5 g-3">
               <Col xs={12} md={3}>
                 <DashboardCard
                   title="Service Request"
                   value="550"
                   change="20%"
-                  footerText="20 Today"
+                  footerText="20 Service Request Today"
                   positiveChange={false}
                 />
               </Col>
@@ -97,7 +97,7 @@ const ServiceRequest = () => {
                   title="All Work Order"
                   value="1050"
                   change="30%"
-                  footerText="600 Today"
+                  footerText="600 Total Work Order Today"
                   positiveChange
                 />
               </Col>
@@ -106,7 +106,7 @@ const ServiceRequest = () => {
                   title="Pending Work Order"
                   value="150"
                   change="10%"
-                  footerText="20 Today"
+                  footerText="20 Pending Work Order Today"
                   positiveChange={false}
                 />
               </Col>
@@ -115,7 +115,7 @@ const ServiceRequest = () => {
                   title="Close Work Order"
                   value="900"
                   change="30%"
-                  footerText="300 Today"
+                  footerText="30 Closed Work Order Today"
                   positiveChange
                 />
               </Col>
