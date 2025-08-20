@@ -97,9 +97,13 @@ export function DashBoard() {
                 value="5"
               /> */}
             </Row>
-            <Box sx={{ my: 5 }}>
+
+            {/* code of Create Work Order Section */}
+
+            {/* <Box sx={{ my: 5 }}>
               <CreateWorkOrder />
-            </Box>
+            </Box> */}
+
 <Row className="dashboard-row">
   {/* Work Order Chart Column */}
   <Col xs={12} md={7} className="dashboard-column">

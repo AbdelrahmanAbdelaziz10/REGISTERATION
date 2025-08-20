@@ -19,7 +19,6 @@ const CHART_DATA = [
   { status: 'Cancelled', count: 5 },
   { status: 'Pending', count: 8 },
   { status: 'Completed', count: 32 },
-  { status: 'Cancelled', count: 5 }
 ];
 
 const COLORS = {
