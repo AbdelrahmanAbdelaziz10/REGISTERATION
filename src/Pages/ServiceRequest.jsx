@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import TableData from "../components/Common/TableData";
+import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import "../Style/ServiceRequest.css";
-import { Link } from "react-router-dom";
-import { useAuth } from "../components/Auth/AuthContext";
-import Navbar from "../components/Common/Navbar";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Common/Navbar";
 import Sidebar from "../components/Common/Sidebar";
 import DashboardCard from "../components/Common/Card";
-import { Create as CreateIcon } from "@mui/icons-material";
+import TableData from "../components/Common/TableData";
+import { useAuth } from "../components/Auth/AuthContext";
+import { useSidebar } from "../components/Context/SidebarContext"; // import context
 import AddIcon from "@mui/icons-material/Add";
+import '../Style/ServiceRequest.css'
 
 const ServiceRequest = () => {
   const [srData, setSrData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { token } = useAuth();
+  const { sidebarOpen } = useSidebar(); // get from context
   const sidebarWidth = sidebarOpen ? 220 : 65;
-
-  const { token, logout } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,44 +29,36 @@ const ServiceRequest = () => {
           },
         });
 
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
-        }
 
         const data = await response.json();
         setSrData(data);
       } catch (err) {
         setError(err.message);
-        console.error("Error fetching data:", err);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="app-container">
-      {/* Full-width Navbar at top */}
-      <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-      {/* Main content area below navbar */}
+      <Navbar />
       <Container fluid>
         <Box
           component="main"
           sx={{
-            margin: {
-              xs: "5rem 1rem 0", // mobile: 5rem top, 1rem sides
-              md: "6rem 2rem 0", // desktop: 5rem top, 2rem sides
-            },
-            minHeight: "calc(100vh - 5rem)", // Full height minus navbar
-            transition: "margin 0.3s ease", // Smooth transitions
+            margin: { xs: "5rem 1rem 0", md: "6rem 2rem 0" },
+            minHeight: "calc(100vh - 5rem)",
+            transition: "margin 0.3s ease",
           }}
         >
-          {" "}
           <Sidebar isOpen={sidebarOpen} width={sidebarWidth} />
           <main
             className="content-area"
@@ -76,70 +66,59 @@ const ServiceRequest = () => {
           >
             <Row className="my-5 justify-content-between">
               <Col xs={8} md={9} sm={8}>
+                {" "}
                 <h3 className="service-title">
-                  {/* <CreateIcon className="title-icon" /> */}
-                  Service Request 👋
-                </h3>
-              </Col>
+                  {" "}
+                  {/* <CreateIcon className="title-icon" /> */} Service Request
+                  👋{" "}
+                </h3>{" "}
+              </Col>{" "}
               <Col xs={4} md={3} sm={4} className="d-flex justify-content-end">
+                {" "}
                 <Link className="create-service ">
-                  <AddIcon className="create-icon" />
-                  <span>Create Service Request</span>
-                </Link>
+                  {" "}
+                  <AddIcon className="create-icon" />{" "}
+                  <span>Create Service Request</span>{" "}
+                </Link>{" "}
               </Col>
             </Row>
             <Row className="stats-section justify-content-center mb-5">
-              <Col xs={12} md={3} className="px-2">
+              <Col xs={12} md={3}>
                 <DashboardCard
                   title="Service Request"
                   value="550"
                   change="20%"
-                  footerText="20 Service Request Today"
-                  positiveChange="none"
+                  footerText="20 Today"
+                  positiveChange={false}
                 />
               </Col>
-              <Col xs={12} md={3} className="px-2">
+              <Col xs={12} md={3}>
                 <DashboardCard
                   title="All Work Order"
                   value="1050"
                   change="30%"
-                  footerText="600 Total Work Order Today"
-                  positiveChange="none"
+                  footerText="600 Today"
+                  positiveChange
                 />
               </Col>
-              <Col xs={12} md={3} className="px-2">
+              <Col xs={12} md={3}>
                 <DashboardCard
-                  title="Pending Work Order "
+                  title="Pending Work Order"
                   value="150"
                   change="10%"
-                  footerText="20 Pending Work Order Today"
+                  footerText="20 Today"
                   positiveChange={false}
-                />{" "}
+                />
               </Col>
-              <Col xs={12} md={3} className="px-2">
+              <Col xs={12} md={3}>
                 <DashboardCard
                   title="Close Work Order"
                   value="900"
                   change="30%"
-                  footerText="300 Closed Work Order Today"
-                  positiveChange={true}
-                />{" "}
+                  footerText="300 Today"
+                  positiveChange
+                />
               </Col>
-              {/* <StatsCard
-                title="12 Open Work Orders"
-                subtitle="Pending Requests"
-                value="5"
-              />
-                            <StatsCard
-                title="12 Open Work Orders"
-                subtitle="Pending Requests"
-                value="5"
-              />
-                            <StatsCard
-                title="12 Open Work Orders"
-                subtitle="Pending Requests"
-                value="5"
-              /> */}
             </Row>
             <div className="mb-5">
               <TableData srData={srData} />

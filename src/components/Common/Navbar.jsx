@@ -14,11 +14,13 @@ import logo from "../../assets/logo.png";
 import "../../Style/NavBar.css";
 import { Container } from "react-bootstrap";
 import profile from "../../assets/profile.png";
+import {useSidebar} from '../Context/SidebarContext'
 
 export default function Navbar({ onMenuClick }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();
+  const { toggleSidebar } = useSidebar();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,7 +79,7 @@ export default function Navbar({ onMenuClick }) {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={onMenuClick}
+              onClick={toggleSidebar}
               aria-label="menu"
               sx={{
                 color: "#fff",
