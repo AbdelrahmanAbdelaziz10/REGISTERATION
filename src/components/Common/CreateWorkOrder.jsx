@@ -18,7 +18,7 @@ const CreateWorkOrder = () => {
         variant="contained"
         startIcon={<AddIcon />}
         sx={{
-          backgroundColor: '#1976d2',
+          backgroundColor: '#4DA8DA',
           borderRadius: '8px',
           padding: '12px 24px',
           fontSize: '1rem',

@@ -22,6 +22,7 @@ const COLUMNS = [
   { id: "reportdate", label: "Reported Date", minWidth: 50, align: "center" },
   { id: "commoditygroup", label: "Commodity Group", minWidth: 100, align: "center" },
   { id: "reportedpriority", label: "Priority", minWidth: 100, align: "center" },
+  
 ];
 
 // Styled components

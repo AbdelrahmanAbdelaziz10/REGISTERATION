@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
+        localStorage.removeItem('Token');
+
     setToken(null);
     setIsAuthenticated(false);
     navigate('/login', { replace: true });

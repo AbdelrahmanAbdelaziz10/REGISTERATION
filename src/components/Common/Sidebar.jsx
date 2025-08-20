@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Drawer,
   List,
@@ -25,30 +25,59 @@ import {
   Category as TypesIcon,
   CheckCircle as StatusIcon,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = ({ isOpen, width }) => {
+  const location = useLocation();
   const [reportsOpen, setReportsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [popperOpen, setPopperOpen] = useState(false);
+  const [activePath, setActivePath] = useState("");
+
+  // Update active path when location changes
+  useEffect(() => {
+    setActivePath(location.pathname);
+    
+    // Only auto-expand reports if sidebar is open AND current path is a sub-item
+    if (isOpen) {
+      const isReportsSubItem = menuItems
+        .find(item => item.subItems)
+        ?.subItems.some(subItem => subItem.path === location.pathname);
+      
+      if (isReportsSubItem) {
+        setReportsOpen(true);
+      }
+    } else {
+      // Keep reports closed when sidebar is collapsed
+      setReportsOpen(false);
+    }
+  }, [location.pathname, isOpen]); // Added isOpen as dependency
 
   const menuItems = [
     {
       text: "Dashboard",
       icon: <DashboardIcon />,
       path: "/dashboard",
-      active: true,
     },
     {
       text: "Service Request",
       icon: <CreateIcon />,
       path: "/service-request",
     },
-    { text: "My Work Orders", icon: <WorkOrdersIcon />, path: "/work-orders" },
-    { text: "Assets", icon: <AssetsIcon />, path: "/assets" },
+    { 
+      text: "My Work Orders", 
+      icon: <WorkOrdersIcon />, 
+      path: "/work-orders" 
+    },
+    { 
+      text: "Assets", 
+      icon: <AssetsIcon />, 
+      path: "/assets" 
+    },
     {
       text: "Reports",
       icon: <ReportsIcon />,
+      path: "/reports",
       subItems: [
         { 
           text: "Work Order Types", 
@@ -62,8 +91,26 @@ const Sidebar = ({ isOpen, width }) => {
         },
       ],
     },
-    { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
+    { 
+      text: "Settings", 
+      icon: <SettingsIcon />, 
+      path: "/settings" 
+    },
   ];
+
+  // Check if a menu item is active
+  const isItemActive = (item) => {
+    if (item.path === activePath) return true;
+    if (item.subItems) {
+      return item.subItems.some(subItem => subItem.path === activePath);
+    }
+    return false;
+  };
+
+  // Check if a sub-item is active
+  const isSubItemActive = (subItem) => {
+    return subItem.path === activePath;
+  };
 
   const handleReportsToggle = () => {
     setReportsOpen(!reportsOpen);
@@ -114,7 +161,7 @@ const Sidebar = ({ isOpen, width }) => {
                   sx={{
                     borderRadius: "4px",
                     mb: "4px",
-                    backgroundColor: item.active
+                    backgroundColor: isItemActive(item)
                       ? "rgba(255,255,255,0.2)"
                       : "transparent",
                     "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
@@ -129,7 +176,8 @@ const Sidebar = ({ isOpen, width }) => {
                         primary={item.text} 
                         sx={{ 
                           "& span": { 
-                            fontWeight: "bold" 
+                            fontWeight: "bold",
+                            color: isItemActive(item) ? "#fff" : "rgba(255,255,255,0.9)"
                           } 
                         }} 
                       />
@@ -138,7 +186,7 @@ const Sidebar = ({ isOpen, width }) => {
                   )}
                 </ListItemButton>
 
-                {/* Expanded sidebar menu */}
+                {/* Expanded sidebar menu - Only show when sidebar is open */}
                 {isOpen && (
                   <Collapse in={reportsOpen} timeout="auto" unmountOnExit>
                     <Box 
@@ -158,12 +206,18 @@ const Sidebar = ({ isOpen, width }) => {
                             to={subItem.path}
                             sx={{
                               mb: "2px",
+                              backgroundColor: isSubItemActive(subItem)
+                                ? "rgba(25, 118, 210, 0.15)"
+                                : "transparent",
                               "&:hover": {
                                 backgroundColor: "rgba(25, 118, 210, 0.1)",
                               },
                             }}
                           >
-                            <ListItemIcon sx={{ color: "#1976d2", minWidth: "25px"}}>
+                            <ListItemIcon sx={{ 
+                              color: isSubItemActive(subItem) ? "#1565c0" : "#1976d2", 
+                              minWidth: "25px"
+                            }}>
                               {subItem.icon}
                             </ListItemIcon>
                             <ListItemText
@@ -171,8 +225,8 @@ const Sidebar = ({ isOpen, width }) => {
                               sx={{ 
                                 "& span": { 
                                   fontSize: "0.9rem",
-                                  color: "#1976d2",
-                                  fontWeight: "bold"
+                                  color: isSubItemActive(subItem) ? "#1565c0" : "#1976d2",
+                                  fontWeight: isSubItemActive(subItem) ? "bold" : "normal"
                                 } 
                               }}
                             />
@@ -209,6 +263,9 @@ const Sidebar = ({ isOpen, width }) => {
                           onClick={handleReportsLeave}
                           sx={{
                             color: 'white',
+                            backgroundColor: isSubItemActive(subItem)
+                              ? "rgba(255,255,255,0.2)"
+                              : "transparent",
                             "&:hover": {
                               backgroundColor: "rgba(255,255,255,0.1)",
                             },
@@ -234,7 +291,7 @@ const Sidebar = ({ isOpen, width }) => {
                   sx={{
                     borderRadius: "4px",
                     mb: "4px",
-                    backgroundColor: item.active
+                    backgroundColor: isItemActive(item)
                       ? "rgba(255,255,255,0.2)"
                       : "transparent",
                     "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
@@ -248,7 +305,8 @@ const Sidebar = ({ isOpen, width }) => {
                       primary={item.text} 
                       sx={{ 
                         "& span": { 
-                          fontWeight: "bold" 
+                          fontWeight: "bold",
+                          color: isItemActive(item) ? "#fff" : "rgba(255,255,255,0.9)"
                         } 
                       }} 
                     />
