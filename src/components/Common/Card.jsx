@@ -23,7 +23,7 @@ const DashboardCard = ({ title, value, change, footerText, positiveChange }) => 
     }}>
       <CardContent sx={{ padding: '1.5rem' }}>
                 <Typography variant="subtitle1" sx={{
-          fontSize: '1rem',
+          fontSize: '.9rem',
           fontWeight: 600,
           color: '#64748B'
         }}>
@@ -54,6 +54,9 @@ const DashboardCard = ({ title, value, change, footerText, positiveChange }) => 
           </Box>
         )}
       </CardContent>
+
+
+      
       {footerText && (
         <Box sx={{
           backgroundColor: theme.palette.primary.main,
